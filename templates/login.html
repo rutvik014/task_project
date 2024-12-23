@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f8fa;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #1da1f2;
+            border-color: #1da1f2;
+        }
+        .btn-primary:hover {
+            background-color: #0d8ddb;
+            border-color: #0d8ddb;
+        }
+        .btn-secondary {
+            background-color: #657786;
+            border-color: #657786;
+        }
+        .btn-secondary:hover {
+            background-color: #4a5d6a;
+            border-color: #4a5d6a;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1 class="text-center">Login</h1>
+        <form method="POST" action="{{ url_for('auth_bp.login') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.username.label(class="form-control-label") }}
+                {{ form.username(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-control-label") }}
+                {{ form.password(class="form-control") }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+        <div class="text-center mt-3">
+            <p>Don't have an account? <a href="{{ url_for('auth_bp.register') }}" class="btn btn-secondary">Sign Up</a></p>
+        </div>
+    </div>
+</body>
+</html>
