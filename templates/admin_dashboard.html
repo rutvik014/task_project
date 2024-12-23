@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .table {
+            background-color: #1e1e1e;
+            color: #e0e0e0; /* Set text color to light */
+        }
+        .table thead {
+            background-color: #333333;
+            color: #e0e0e0;
+        }
+        .table tbody tr {
+            background-color: #1e1e1e;
+            color: #e0e0e0; /* Set text color to light */
+        }
+        .table tbody tr:nth-of-type(odd) {
+            background-color: #2a2a2a;
+            color: #e0e0e0; /* Set text color to light */
+        }
+        .btn-primary {
+            background-color: #6200ea;
+            border-color: #6200ea;
+        }
+        .btn-primary:hover {
+            background-color: #3700b3;
+            border-color: #3700b3;
+        }
+        .btn-danger {
+            background-color: #b00020;
+            border-color: #b00020;
+        }
+        .btn-danger:hover {
+            background-color: #7f0000;
+            border-color: #7f0000;
+        }
+        .btn-warning {
+            background-color: #ffab00;
+            border-color: #ffab00;
+        }
+        .btn-warning:hover {
+            background-color: #ff6f00;
+            border-color: #ff6f00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Admin Dashboard</h1>
+        <div class="d-flex justify-content-between mb-3">
+            <a href="{{ url_for('task_bp.add_task') }}" class="btn btn-primary">Add Task</a>
+            <a href="{{ url_for('task_bp.view_all_tasks') }}" class="btn btn-warning">View All Tasks</a>
+            <a href="{{ url_for('auth_bp.logout') }}" class="btn btn-danger">Logout</a>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Tasks</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+                        <ul>
+                            {% for task in user.tasks %}
+                            <li>{{ task.title }} - {{ task.status }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <form action="{{ url_for('task_bp.delete_user', user_id=user.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete User</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

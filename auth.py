@@ -13,7 +13,8 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('Account created successfully!', 'success')
-        return redirect(url_for('auth_bp.login'))
+        login_user(user)
+        return redirect(url_for('dashboard'))
     return render_template('register.html', form=form)
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -24,7 +25,7 @@ def login():
         if user and user.password == form.password.data:
             login_user(user)
             flash('Login successful!', 'success')
-            return redirect(url_for('index'))
+            return redirect(url_for('dashboard'))
         else:
             flash('Login unsuccessful. Please check username and password', 'danger')
     return render_template('login.html', form=form)

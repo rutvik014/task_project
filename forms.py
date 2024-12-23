@@ -26,4 +26,5 @@ class TaskForm(FlaskForm):
     priority = SelectField('Priority', choices=[('Low', 'Low'), ('Medium', 'Medium'), ('High', 'High')], validators=[DataRequired()])
     status = SelectField('Status', choices=[('Not Started', 'Not Started'), ('In Progress', 'In Progress'), ('Completed', 'Completed')], validators=[DataRequired()])
     due_date = DateField('Due Date', format='%Y-%m-%d', validators=[DataRequired()])
+    category = StringField('Category', validators=[DataRequired()])  # Add this line
     submit = SubmitField('Save')

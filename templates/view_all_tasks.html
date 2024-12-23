@@ -3,50 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Manager</title>
+    <title>All Tasks</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f5f8fa;
+            background-color: #121212;
+            color: #e0e0e0;
         }
         .container {
             margin-top: 50px;
         }
+        .table {
+            background-color: #1e1e1e;
+            color: #e0e0e0; /* Set text color to light */
+        }
         .table thead {
-            background-color: #1da1f2;
-            color: white;
+            background-color: #333333;
+            color: #e0e0e0;
+        }
+        .table tbody tr {
+            background-color: #1e1e1e;
+            color: #e0e0e0; /* Set text color to light */
+        }
+        .table tbody tr:nth-of-type(odd) {
+            background-color: #2a2a2a;
+            color: #e0e0e0; /* Set text color to light */
         }
         .btn-primary {
-            background-color: #1da1f2;
-            border-color: #1da1f2;
+            background-color: #6200ea;
+            border-color: #6200ea;
         }
         .btn-primary:hover {
-            background-color: #0d8ddb;
-            border-color: #0d8ddb;
+            background-color: #3700b3;
+            border-color: #3700b3;
         }
         .btn-danger {
-            background-color: #e0245e;
-            border-color: #e0245e;
+            background-color: #b00020;
+            border-color: #b00020;
         }
         .btn-danger:hover {
-            background-color: #c81e4d;
-            border-color: #c81e4d;
+            background-color: #7f0000;
+            border-color: #7f0000;
         }
         .btn-warning {
-            background-color: #ffad1f;
-            border-color: #ffad1f;
+            background-color: #ffab00;
+            border-color: #ffab00;
         }
         .btn-warning:hover {
-            background-color: #e99c17;
-            border-color: #e99c17;
+            background-color: #ff6f00;
+            border-color: #ff6f00;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center mb-4">Task Manager</h1>
+        <h1 class="text-center mb-4">All Tasks</h1>
         <div class="d-flex justify-content-between mb-3">
-            <a href="{{ url_for('task_bp.add_task') }}" class="btn btn-primary">Add Task</a>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary">Back to Dashboard</a>
             <a href="{{ url_for('auth_bp.logout') }}" class="btn btn-danger">Logout</a>
         </div>
         <table class="table table-bordered table-striped">
@@ -58,7 +71,7 @@
                     <th>Status</th>
                     <th>Due Date</th>
                     <th>Category</th>
-                    <th>Actions</th>
+                    <th>Assignee</th>
                 </tr>
             </thead>
             <tbody>
@@ -70,12 +83,7 @@
                     <td>{{ task.status }}</td>
                     <td>{{ task.due_date }}</td>
                     <td>{{ task.category }}</td>
-                    <td>
-                        <a href="{{ url_for('task_bp.update_task', task_id=task.id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ url_for('task_bp.delete_task', task_id=task.id) }}" method="POST" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </td>
+                    <td>{{ task.assignee.username }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

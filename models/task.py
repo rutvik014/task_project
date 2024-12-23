@@ -8,5 +8,6 @@ class Task(db.Model):
     priority = db.Column(db.String(10), nullable=False)
     status = db.Column(db.String(20), nullable=False)
     due_date = db.Column(db.Date, nullable=False)
+    category = db.Column(db.String(50), nullable=True)
     assignee_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    assignee = db.relationship('User', backref=db.backref('tasks', lazy=True))
+    assignee = db.relationship('User', backref=db.backref('assigned_tasks', lazy=True))  # Use 'assigned_tasks' as the backref name
