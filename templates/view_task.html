@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Task</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">{{ task.title }}</h1>
+        <p>{{ task.description }}</p>
+        <p>Priority: {{ task.priority }}</p>
+        <p>Status: {{ task.status }}</p>
+        <p>Due Date: {{ task.due_date }}</p>
+        <p>Category: {{ task.category }}</p>
+
+        <h3>Comments</h3>
+        <ul>
+            {% for comment in task.comments %}
+            <li>{{ comment.content }} - {{ comment.user.username }} at {{ comment.timestamp }}</li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('task_bp.add_comment', task_id=task.id) }}" method="POST">
+            {{ comment_form.hidden_tag() }}
+            <div class="form-group">
+                {{ comment_form.content.label(class="form-label") }}
+                {{ comment_form.content(class="form-control") }}
+            </div>
+            <button type="submit" class="btn btn-primary">Add Comment</button>
+        </form>
+
+        <h3>Attachments</h3>
+        <ul>
+            {% for attachment in task.attachments %}
+            <li><a href="{{ url_for('static', filename=attachment.filepath) }}">{{ attachment.filename }}</a></li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('task_bp.add_attachment', task_id=task.id) }}" method="POST" enctype="multipart/form-data">
+            {{ attachment_form.hidden_tag() }}
+            <div class="form-group">
+                {{ attachment_form.file.label(class="form-label") }}
+                {{ attachment_form.file(class="form-control") }}
+            </div>
+            <button type="submit" class="btn btn-primary">Add Attachment</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

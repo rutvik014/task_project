@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
+    <title>Dashboard</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -57,7 +57,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center mb-4">User Dashboard</h1>
+        <h1 class="text-center mb-4">Dashboard</h1>
         <div class="d-flex justify-content-between mb-3">
             <a href="{{ url_for('task_bp.add_task') }}" class="btn btn-primary">Add Task</a>
             <a href="{{ url_for('auth_bp.logout') }}" class="btn btn-danger">Logout</a>
@@ -69,6 +69,12 @@
             <p>In Progress: {{ tasks|selectattr('status', 'equalto', 'In Progress')|list|length }}</p>
             <p>Not Started: {{ tasks|selectattr('status', 'equalto', 'Not Started')|list|length }}</p>
         </div>
+        <h2>Your Tasks</h2>
+        <ul>
+            {% for task in tasks %}
+                <li>{{ task.title }} - {{ task.description }}</li>
+            {% endfor %}
+        </ul>
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -78,6 +84,7 @@
                     <th>Status</th>
                     <th>Due Date</th>
                     <th>Category</th>
+                    <th>Assignee</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -90,6 +97,7 @@
                     <td>{{ task.status }}</td>
                     <td>{{ task.due_date }}</td>
                     <td>{{ task.category }}</td>
+                    <td>{{ task.assigned_user.username if task.assigned_user else 'Unassigned' }}</td>
                     <td>
                         <a href="{{ url_for('task_bp.update_task', task_id=task.id) }}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="{{ url_for('task_bp.delete_task', task_id=task.id) }}" method="POST" style="display:inline;">

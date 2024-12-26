@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks</title>
+</head>
+<body>
+    <h1>Tasks</h1>
+    <h2>Categories</h2>
+    <ul>
+        {% for category in categories %}
+            <li>{{ category.name }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Your Tasks</h2>
+    <ul>
+        {% for task in tasks %}
+            <li>{{ task.title }} - {{ task.description }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('auth_bp.logout') }}">Logout</a>
+</body>
+</html>

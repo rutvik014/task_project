@@ -58,6 +58,7 @@
                     <th>Status</th>
                     <th>Due Date</th>
                     <th>Category</th>
+                    <th>Assignee</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -70,6 +71,7 @@
                     <td>{{ task.status }}</td>
                     <td>{{ task.due_date }}</td>
                     <td>{{ task.category }}</td>
+                    <td>{{ task.assignee.username if task.assignee else 'Unassigned' }}</td>
                     <td>
                         <a href="{{ url_for('task_bp.update_task', task_id=task.id) }}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="{{ url_for('task_bp.delete_task', task_id=task.id) }}" method="POST" style="display:inline;">
